@@ -100,33 +100,33 @@ const iqf = function ignisQueryFunctional(mainSelector = null, subSelector = nul
 
 const addClass = function addClassToElement(elem, toAdd) {
   let temp;
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.classList.add(toAdd);
-      return iqf(elem);
+      return elem;
     }
   );
 };
 
 const removeClass = function removeClassToElement(elem, toRemove) {
   let temp;
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.classList.remove(toRemove);
-      return iqf(elem);
+      return elem;
     }
   );
 };
 
 const attr = function setAttribut(elem, atr, val) {
   let temp;
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.setAttribute(atr, val);
-      return iqf(elem);
+      return elem;
     }
   );
 };
@@ -134,11 +134,11 @@ const attr = function setAttribut(elem, atr, val) {
 // set the css of the query in the form of "backgroundcolor:blue;width:125px"
 const css = function setStyle(elem, style) {
   let temp;
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.style.cssText = style;
-      return iqf(elem);
+      return elem;
     }
   );
 };
@@ -150,18 +150,18 @@ const html = function setContentAbsolutly(elem, code) {
   const a = code.length > 0 && code !== undefined ? code : null;
 
   if (a === null) {
-    iqf(elem).map(
+    elem.map(
       (x) => {
         tempArray.push(x.innerHTML);
         return tempArray;
       }
     );
   } else {
-    iqf(elem).map(
+    elem.map(
       (x) => {
         temp = x;
         temp.innerHTML = a;
-        return iqf(elem);
+        return elem;
       }
     );
   }
@@ -172,26 +172,26 @@ const val = function returnElemValue(elem, ...theArgs) {
   const a = theArgs.length > 0 && theArgs[0] !== undefined ? theArgs[0] : null;
 
   if (a === null) {
-    return iqf(elem)[0].value;
+    return elem[0].value;
   }
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.value = a;
-      return iqf(elem);
+      return elem;
     }
   );
-  return iqf(elem);
+  return elem;
 };
 
 // adds an event listener in the form of element.addEventListener(type, listener);
 const listen = function addEvent(elem, evnt, func) {
   let temp;
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.addEventListener(evnt, func);
-      return iqf(elem);
+      return elem;
     }
   );
 };
@@ -199,21 +199,21 @@ const listen = function addEvent(elem, evnt, func) {
 // add your code to the html of $
 const append = function addContentToExisting(elem, code) {
   let temp;
-  iqf(elem).map(
+  elem.map(
     (x) => {
       temp = x;
       temp.innerHTML += code;
-      return iqf(elem);
+      return elem;
     }
   );
 };
 
-// probably needs some work with multiple elements returned by iqf
+// probably needs some work with multiple elements returned by $
 const index = function getIndexOfElement(elem) {
-  const children = iqf(elem).parentNode.childNodes;
+  const children = elem.parentNode.childNodes;
   let num = 0;
   for (let i = 0; i < children.length; i += 1) {
-    if (children[i] === iqf(elem)) return num;
+    if (children[i] === elem) return num;
     if (children[i].nodeType === 1) num += 1;
   }
   return -1;
@@ -236,8 +236,8 @@ const ajaxPost = function getAndPost(elem, ...theArgs) {
     xmlhttp.onreadystatechange = function whenChangeHappen() {
       if (xmlhttp.readyState === XMLHttpRequest.DONE) {
         if (xmlhttp.status === 200) {
-          for (let i = 0; i < iqf(elem).length; i += 1) {
-            iqf(elem)[i].innerHTML += xmlhttp.response;
+          for (let i = 0; i < elem.length; i += 1) {
+            elem[i].innerHTML += xmlhttp.response;
           }
         } else if (xmlhttp.status === 400) {
           alert('page does not exist on the server.');
@@ -252,20 +252,20 @@ const ajaxPost = function getAndPost(elem, ...theArgs) {
   }
 };
 
-addClass('#addclassSingle', 'singleClass_added');
-addClass('.addclassMultiple', 'multipleClass_added');
-removeClass('#removeClsSingle', 'you_shouldntSee_this');
-removeClass('#removeCls_mltp', 'you_shouldntSee_AnyOfThis');
-attr('#sglAttr', 'new_attribut', 'got_added');
-attr('.MltpAttr', 'new_attributs', 'also_got_added');
-css('#sglCss', 'backgroundcolor:blue');
-css('.MltpCss', 'backgroundcolor:blue');
-html('#sglHtml', '');
-html('.MltpHtml', '');
+addClass(iqf('#addclassSingle'), 'singleClass_added');
+addClass(iqf('.addclassMultiple'), 'multipleClass_added');
+removeClass(iqf('#removeClsSingle'), 'you_shouldntSee_this');
+removeClass(iqf('#removeCls_mltp'), 'you_shouldntSee_AnyOfThis');
+attr(iqf('#sglAttr'), 'new_attribut', 'got_added');
+attr(iqf('.MltpAttr'), 'new_attributs', 'also_got_added');
+css(iqf('#sglCss'), 'backgroundcolor:blue');
+css(iqf('.MltpCss'), 'backgroundcolor:blue');
+html(iqf('#sglHtml'), '');
+html(iqf('.MltpHtml'), '');
 val();
-listen('#sglListen', '');
-listen('.MltpListen', '');
-append('#sglAppend', '');
-append('.MltpAppend', '');
+listen(iqf('#sglListen'), '');
+listen(iqf('.MltpListen'), '');
+append(iqf('#sglAppend'), '');
+append(iqf('.MltpAppend'), '');
 index();
 ajaxPost();
